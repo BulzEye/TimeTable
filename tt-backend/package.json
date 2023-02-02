@@ -1,0 +1,32 @@
+{
+  "name": "tt-backend",
+  "version": "1.0.0",
+  "description": "A backend for BulzEye's timetable application designed in Node.js in TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "dev": "nodemon --exec ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BulzEye/TimeTable.git"
+  },
+  "keywords": [
+    "timetable"
+  ],
+  "author": "BulzEye",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BulzEye/TimeTable/issues"
+  },
+  "homepage": "https://github.com/BulzEye/TimeTable#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.16",
+    "@types/node": "^18.11.18",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

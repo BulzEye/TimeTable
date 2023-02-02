@@ -1,0 +1,3 @@
+CREATE TABLE courses(id SERIAL PRIMARY KEY, code VARCHAR(10), name VARCHAR(1024), start_t
+ime int, end_time int, status varchar(100), replac
+ed_by 

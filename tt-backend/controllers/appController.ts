@@ -68,3 +68,26 @@ export const add_course_post = (req: Request, res: Response) => {
         }
     )
 }
+
+export const delete_course = (req: Request, res: Response) => {
+    console.log("Received request for deleting course");
+    const code: string = req.params.code;
+    pool.query(
+        "DELETE FROM course_list WHERE course_code = $1", 
+        [code], 
+        (error, results) => {
+            if(error) {
+                console.error("Error deleting course: ", error);
+                res.status(500).json({
+                    error: "Error deleting course"
+                });
+            }
+            else {
+                console.log(results);
+                res.json({
+                    success: "Course successfully deleted"
+                });
+            }
+        }
+    )
+}

@@ -4,16 +4,20 @@ CREATE TABLE course_list (
     course_instructors varchar array,
     course_coordinator varchar,
     current_instructor varchar,
+    default_location varchar,
     course_credits smallint,
     PRIMARY KEY (course_code)
 );
+
 CREATE TYPE c_status AS ENUM('normal', 'replaced by', 'cancelled');
-CREATE TABLE courses(
+
+CREATE TABLE course_slots(
     id serial NOT NULL UNIQUE,
     course varchar(10),
     course_type char(1),
     start_time time,
     end_time time,
+    day smallint,
     class_status c_status,
     replaced_by varchar(10),
     PRIMARY KEY (id),

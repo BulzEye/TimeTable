@@ -1,7 +1,10 @@
+import "dotenv/config";
 import express from "express";
 import appRoutes from "./routes/appRoutes";
 
 const app = express();
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
     console.log("Hello World!");

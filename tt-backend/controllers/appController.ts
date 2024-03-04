@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, query } from "express";
 import { Pool } from "pg";
 import { CourseListItem } from "../models/tableItemTypes";
 
@@ -63,6 +63,54 @@ export const add_course_post = (req: Request, res: Response) => {
                 console.log(results);
                 res.json({
                     success: "Course successfully added"
+                });
+            }
+        }
+    )
+}
+
+export const update_course_patch = (req: Request, res: Response) => {
+    console.log("Received request for updating course");
+    const code = req.params.code;
+    const updates = req.body;
+
+    let queryString = "UPDATE course_list SET ";
+    let queryArray: string[] = [];
+
+    Object.keys(updates).forEach((field, index) => {
+        if(index!==0) queryString += ", ";
+        queryString += `${field} = $${index+1}`;
+        // queryArray.push(field);
+        queryArray.push(updates[field]);
+    });
+    queryString += ` WHERE course_code = $${Object.keys(updates).length+1}`;
+    queryArray.push(code);
+
+    console.log(queryString);
+    console.log(queryArray);
+
+    pool.query(
+        queryString, 
+        queryArray, 
+        (error, results) => {
+            if(error) {
+                if(error.message.includes("duplicate key value violates unique constraint")) {
+                    console.error("ERROR: Course already exists.\nCallstack: ", error);
+                    res.status(500).json({
+                        error: "Course already exists"
+                    });
+                }
+                else {
+                    console.error("Error updating course:", error);
+                    res.status(500).json({
+                        error: "Error updating course"
+                    });
+                }
+            }
+            else {
+                console.log(results);
+                res.json({
+                    success: "Course successfully updated"
                 });
             }
         }

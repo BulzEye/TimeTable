@@ -158,6 +158,25 @@ export const course_slots_get = (req: Request, res: Response) => {
     // res.send("Request for course information received");
 }
 
+export const course_slots_get_by_day = (req: Request, res: Response) => {
+    const day: number = parseInt(req.params.day);
+    pool.query("SELECT * FROM course_slots WHERE day = $1 ORDER BY start_time ASC", [day], (error, results) => {
+        if(error) {
+            console.error("Error getting course slots:", error);
+            res.status(500).json({
+                error: "Error getting course slots."
+            });
+        }
+        else {
+            console.log(results);
+            res.json({
+                slots: results.rows
+            })
+        }
+    })
+    // res.send("Request for course information received");
+}
+
 export const add_slot_post = (req: Request, res: Response) => {
     console.log("Received request for adding new course slot");
     const newCourse: CourseSlotItem = req.body;
